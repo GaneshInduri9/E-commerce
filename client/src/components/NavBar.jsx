@@ -6,6 +6,7 @@ import { IoHomeOutline } from "react-icons/io5";
 import { BsCollection } from "react-icons/bs";
 import { IoPersonOutline } from "react-icons/io5";
 import { PiContactlessPaymentThin } from "react-icons/pi";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 const NavBar = () => {
   const [visible, setVisible] = useState(false);
   return (
@@ -77,9 +78,9 @@ const NavBar = () => {
           <div className="flex flex-col items-center gap-2 mt-3 text-gray-600 ">
             <div
               onClick={() => setVisible(false)}
-              className="flex flex-col-reverse gap-4 cursor-pointer"
+              className="cursor-pointer mr-auto pl-5"
             >
-              Back
+              <IoIosCloseCircleOutline className="text-2xl" />
             </div>
 
             <NavLink
