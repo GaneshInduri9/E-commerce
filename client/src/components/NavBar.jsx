@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { Link } from "react-router-dom";
+import { IoHomeOutline } from "react-icons/io5";
+import { BsCollection } from "react-icons/bs";
+import { IoPersonOutline } from "react-icons/io5";
+import { PiContactlessPaymentThin } from "react-icons/pi";
 const NavBar = () => {
+  const [visible, setVisible] = useState(false);
   return (
     <div className="flex items-center justify-between py-5 font-medium">
       <Link to="/">
@@ -34,12 +39,79 @@ const NavBar = () => {
           className="w-5 cursor-pointer"
           alt="search"
         />
+
+        <div className="group relative">
+          <img
+            src={assets.profile_icon}
+            alt="Login"
+            className="w-5 cursor-pointer"
+          />
+          <div className="group-hover:block hidden absolute dropdown-menu right-0 p-4">
+            <div className="felx flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
+              <p className="cursor-pointer hover:text-black">My Profile</p>
+              <p className="cursor-pointer hover:text-black">Orders</p>
+              <p className="cursor-pointer hover:text-black">Logout</p>
+            </div>
+          </div>
+        </div>
+
         <Link to="/cart" className="relative">
           <img src={assets.cart_icon} className="w-5 cursor-pointer" alt="" />
           <p className="absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
             10
           </p>
         </Link>
+        <img
+          onClick={() => setVisible(true)}
+          src={assets.menu_icon}
+          alt="Menu"
+          className="w-5 sm:hidden"
+        />
+
+        {/* sidebar menu only visible for mobile screen*/}
+        <div
+          className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${
+            visible ? "w-full" : "w-0"
+          }`}
+        >
+          <div className="flex flex-col items-center gap-2 mt-3 text-gray-600 ">
+            <div
+              onClick={() => setVisible(false)}
+              className="flex flex-col-reverse gap-4 cursor-pointer"
+            >
+              Back
+            </div>
+
+            <NavLink
+              to="/"
+              className="flex items-center hover:border-b-2 hover:border-black transition-all duration-300 gap-1"
+            >
+              <IoHomeOutline />
+              HOME
+            </NavLink>
+            <NavLink
+              to="/collection"
+              className="flex items-center hover:border-b-2 hover:border-black transition-all duration-150 gap-1"
+            >
+              <BsCollection />
+              COLLECTION
+            </NavLink>
+            <NavLink
+              to="/about"
+              className="flex items-center hover:border-b-2 hover:border-black transition-all duration-150 gap-1"
+            >
+              <IoPersonOutline />
+              ABOUT
+            </NavLink>
+            <NavLink
+              to="/contact"
+              className="flex items-center gap-1 hover:border-b-2 hover:border-black transition-all duration-150"
+            >
+              <PiContactlessPaymentThin />
+              CONTACT
+            </NavLink>
+          </div>
+        </div>
       </div>
     </div>
   );
