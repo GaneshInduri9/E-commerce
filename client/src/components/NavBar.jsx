@@ -84,6 +84,7 @@ const NavBar = () => {
             </div>
 
             <NavLink
+              onClick={() => setVisible(false)}
               to="/"
               className="flex items-center hover:border-b-2 hover:border-black transition-all duration-300 gap-1"
             >
@@ -91,6 +92,7 @@ const NavBar = () => {
               HOME
             </NavLink>
             <NavLink
+              onClick={() => setVisible(false)}
               to="/collection"
               className="flex items-center hover:border-b-2 hover:border-black transition-all duration-150 gap-1"
             >
@@ -98,6 +100,7 @@ const NavBar = () => {
               COLLECTION
             </NavLink>
             <NavLink
+              onClick={() => setVisible(false)}
               to="/about"
               className="flex items-center hover:border-b-2 hover:border-black transition-all duration-150 gap-1"
             >
@@ -105,6 +108,7 @@ const NavBar = () => {
               ABOUT
             </NavLink>
             <NavLink
+              onClick={() => setVisible(false)}
               to="/contact"
               className="flex items-center gap-1 hover:border-b-2 hover:border-black transition-all duration-150"
             >
