@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { Link } from "react-router-dom";
@@ -7,8 +7,10 @@ import { BsCollection } from "react-icons/bs";
 import { IoPersonOutline } from "react-icons/io5";
 import { PiContactlessPaymentThin } from "react-icons/pi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { ShopContext } from "../context/ShopContext";
 const NavBar = () => {
   const [visible, setVisible] = useState(false);
+  const { setShowSearch } = useContext(ShopContext);
   return (
     <div className="flex items-center justify-between py-5 font-medium">
       <Link to="/">
@@ -36,6 +38,10 @@ const NavBar = () => {
 
       <div className="flex items-center gap-6">
         <img
+          onClick={() => {
+            setShowSearch(true);
+            navigate("/collection");
+          }}
           src={assets.search_icon}
           className="w-5 cursor-pointer"
           alt="search"
