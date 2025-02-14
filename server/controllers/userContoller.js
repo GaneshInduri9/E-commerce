@@ -1,0 +1,62 @@
+import userModel from "../models/userModel.js";
+import validator from "validator";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+const generateUserToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET);
+};
+
+//Handler of user login
+const loginUser = async (req, res) => {};
+
+// Handler for user register
+const userRegister = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    //checking if he user is already is registered
+    const exist = await userModel.findOne({ email });
+    if (exist) {
+      return res.json({ success: false, message: "user already exists" });
+    }
+
+    // check user password and mail validity and strong password
+    if (!validator.isEmail(email)) {
+      return res.json({ success: false, message: "Please enter a valid mail" });
+    }
+    if (password.length < 8) {
+      return res.json({
+        success: false,
+        message: "Please enter a strong password",
+      });
+    }
+
+    // Hashing the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // create user
+    const newUser = new userModel({
+      name,
+      email,
+      password: hashedPassword,
+    });
+
+    // save user in the DB
+    const user = await newUser.save();
+
+    // Generate a token for user authnecity
+    const token = generateUserToken(user._id);
+
+    res.json({ success: true, token });
+  } catch (err) {
+    console.log(console.err);
+    res.json({ success: false, message: err.message });
+  }
+};
+
+// Handler for admin login
+const adminLogin = async (req, res) => {};
+
+export { loginUser, userRegister, adminLogin };
