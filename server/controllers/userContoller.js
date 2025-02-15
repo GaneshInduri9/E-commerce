@@ -8,7 +8,30 @@ const generateUserToken = (id) => {
 };
 
 //Handler of user login
-const loginUser = async (req, res) => {};
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    //check if the user is in DB
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      return res.json({ success: false, message: "invalid user email" });
+    }
+
+    //check password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.json({ success: false, message: "invalid password" });
+    }
+
+    const token = generateUserToken(user._id);
+    console.log("user login success");
+    return res.json({ success: true, token });
+  } catch (err) {
+    console.log(console.err);
+    res.json({ success: false, message: err.message });
+  }
+};
 
 // Handler for user register
 const userRegister = async (req, res) => {
