@@ -93,6 +93,10 @@ const PlaceOrder = () => {
           }
           break;
 
+        case "razorpay":
+          toast.error("Razorpay is disabled for demo");
+          break;
+
         default:
           break;
       }
